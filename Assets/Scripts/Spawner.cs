@@ -43,7 +43,7 @@ public class Spawner : MonoBehaviour
     private void OnGet(Coin coin)
     {
         coin.Destroyed += CoinRelease;
-        coin.transform.position = GetPosition();       
+        coin.transform.position = GetPosition();
     }
 
     private void CoinRelease(Coin coin)
@@ -56,7 +56,7 @@ public class Spawner : MonoBehaviour
     {
         _counter++;
 
-        if ( _counter > _positions.Length -1)
+        if (_counter > _positions.Length - 1)
             _counter = 0;
 
         return new Vector2(

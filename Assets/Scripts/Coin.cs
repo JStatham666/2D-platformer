@@ -5,9 +5,8 @@ public class Coin : MonoBehaviour
 {
     public event Action<Coin> Destroyed;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void Interact()
     {
-        if (collision.gameObject.TryGetComponent(out Player player))        
-            Destroyed?.Invoke(this);      
+        Destroyed?.Invoke(this);
     }
 }
