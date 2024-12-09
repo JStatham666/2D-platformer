@@ -42,13 +42,13 @@ public class Spawner : MonoBehaviour
 
     private void OnGet(Coin coin)
     {
-        coin.Destroyed += CoinRelease;
+        coin.Destroyed += ReleaseCoin;
         coin.transform.position = GetPosition();
     }
 
-    private void CoinRelease(Coin coin)
+    private void ReleaseCoin(Coin coin)
     {
-        coin.Destroyed -= CoinRelease;
+        coin.Destroyed -= ReleaseCoin;
         _coins.Release(coin);
     }
 

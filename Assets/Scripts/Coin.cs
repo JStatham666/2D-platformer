@@ -5,8 +5,6 @@ public class Coin : MonoBehaviour
 {
     public event Action<Coin> Destroyed;
 
-    public void Interact()
-    {
+    public void Interact() =>
         Destroyed?.Invoke(this);
-    }
 }
