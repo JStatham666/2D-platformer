@@ -27,9 +27,9 @@ public class Spawner : MonoBehaviour
     }
 
     private void Start() =>
-        StartCoroutine(GetCoin());
+        StartCoroutine(GetCoins());
 
-    private IEnumerator GetCoin()
+    private IEnumerator GetCoins()
     {
         WaitForSeconds delay = new WaitForSeconds(_repeatRate);
 

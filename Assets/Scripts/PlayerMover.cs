@@ -1,17 +1,20 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
 public class PlayerMover : MonoBehaviour
 {
-    public readonly string Horizontal = "Horizontal";
-    public readonly string moveX = "moveX";
-    public readonly string onGround = "onGround";
-
     [SerializeField] private float _speed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private bool _onGround;
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private Transform _checkRadius;
     [SerializeField] private LayerMask _ground;
+
+    public readonly string Horizontal = "Horizontal";
+    public readonly string movePositionX = "movePositionX";
+    public readonly string isGrounded = "isGrounded";
 
     private Rigidbody2D _rigidbody2d;
     private SpriteRenderer _spriteRenderer;
@@ -29,7 +32,7 @@ public class PlayerMover : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(CheckingGroundDelay());
+        StartCoroutine(CollidedWithGroundDelay());
     }
 
     private void Update()
@@ -42,7 +45,7 @@ public class PlayerMover : MonoBehaviour
     private void Walk()
     {
         _moveVector.x = Input.GetAxis(Horizontal);
-        _animator.SetFloat(moveX, Mathf.Abs(_moveVector.x));
+        _animator.SetFloat(movePositionX, Mathf.Abs(_moveVector.x));
 
         Vector3 position = transform.position;
         position.x += _moveVector.x * _speed * Time.deltaTime;
@@ -71,19 +74,19 @@ public class PlayerMover : MonoBehaviour
             _rigidbody2d.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
     }
 
-    private void CheckingGround()
+    private void CollidedWithGround()
     {
         _onGround = Physics2D.OverlapBox(_groundCheck.position, _checkRadius.localScale, 0, _ground);
-        _animator.SetBool(onGround, _onGround);
+        _animator.SetBool(isGrounded, _onGround);
     }
 
-    private IEnumerator CheckingGroundDelay()
+    private IEnumerator CollidedWithGroundDelay()
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(_delay);
 
         while (true)
         {
-            CheckingGround();
+            CollidedWithGround();
             yield return waitForSeconds;
         }
     }
