@@ -33,7 +33,7 @@ public class Spawner : MonoBehaviour
     {
         WaitForSeconds delay = new WaitForSeconds(_repeatRate);
 
-        while (true)
+        while (enabled)
         {
             _coins.Get();
             yield return delay;

@@ -30,7 +30,7 @@ public class GroundCollisionDetector : MonoBehaviour
     {
         WaitForSeconds waitForSeconds = new WaitForSeconds(_delay);
 
-        while (true)
+        while (enabled)
         {
             CollidedWithGround();
             yield return waitForSeconds;

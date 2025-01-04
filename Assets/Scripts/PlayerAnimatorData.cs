@@ -8,6 +8,7 @@ public class PlayerAnimatorData : MonoBehaviour
     {
         public static readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
         public static readonly int PositionX = Animator.StringToHash(nameof(PositionX));
+        public static readonly int Attack = Animator.StringToHash(nameof(Attack));
     }
 
     private void Awake() =>
@@ -23,5 +24,11 @@ public class PlayerAnimatorData : MonoBehaviour
         _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, isGrounded);
 
     public void SetupPositionX(float positionX) =>
-        _animator.SetFloat(PlayerAnimatorData.Params.PositionX, positionX);
+        _animator.SetFloat(PlayerAnimatorData.Params.PositionX, positionX); 
+    
+    public void SetupAttack(bool shouldAttack)
+    {
+        if (shouldAttack)
+            _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
+    }
 }
