@@ -1,63 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
+[RequireComponent(typeof(UserInput))]
+[RequireComponent(typeof(PlayerAnimatorData))]
+[RequireComponent(typeof(GroundCollisionDetector))]
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private GroundCollisionDetector _groundCollisionDetector;
-    [SerializeField] private PlayerAnimatorData _playerAnimatorData;
     [SerializeField] private UserInput _userInput;
-    [SerializeField] private int _attackImpulse = 200;
-    [SerializeField] private bool _LockAttack = false;
-
+    [SerializeField] private PlayerAnimatorData _playerAnimatorData;
+    [SerializeField] private GroundCollisionDetector _groundCollisionDetector;
     [SerializeField] private Transform _attackPosition;
     [SerializeField] private LayerMask _enemy;
     [SerializeField] private float _attackRange;
     [SerializeField] private int _damage = 100;
+    [SerializeField] private float _attackColldown = 2f;
 
-    private Rigidbody2D _rigidbody2d;
+    private WaitForSeconds _wait;
+    private bool _canAttack = true;
 
     private void Awake()
     {
+        _wait = new WaitForSeconds(_attackColldown);
         _userInput = GetComponent<UserInput>();
-        _rigidbody2d = GetComponent<Rigidbody2D>();
         _playerAnimatorData = GetComponent<PlayerAnimatorData>();
         _groundCollisionDetector = GetComponent<GroundCollisionDetector>();
     }
 
     private void Update()
     {
-        AnimateAttack();
+        Attack();
     }
 
-    private void AnimateAttack()
+    private void Attack()
     {
-        if (_groundCollisionDetector.OnGround && Input.GetKeyDown(_userInput.AttackButton) && !_LockAttack)
-        {
-            _LockAttack = true;
-            Invoke("AttackLock", 2f);
-
-            _playerAnimatorData.SetupAttack(_LockAttack);
-
-            //_rigidbody2d.velocity = new Vector2(0, 0);
-
-
-            //Quaternion rotationLeftAngle = Quaternion.Euler(0f, -180f, 0f);
-
-            //if (_rigidbody2d.transform.rotation == rotationLeftAngle)
-            //{
-            //    _rigidbody2d.AddForce(Vector2.left * _attackImpulse);
-            //}
-            //else
-            //{
-            //    _rigidbody2d.AddForce(Vector2.right * _attackImpulse);
-            //}
+        if (_groundCollisionDetector.OnGround && Input.GetKeyDown(_userInput.AttackButton) && _canAttack)
+        {           
+            _playerAnimatorData.SetupAttack(_canAttack);
 
             Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPosition.position, _attackRange, _enemy);
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                enemies[i].GetComponent<Enemy>().TakeDamage(_damage);
+                if (enemies[i].TryGetComponent(out Enemy enemy))
+                {
+                    enemy.TakeDamage(_damage);
+                }
             }
         }
     }
@@ -67,10 +54,11 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_attackPosition.position, _attackRange);
     }
- 
 
-    private void AttackLock()
+    private IEnumerator AttackColldown()
     {
-        _LockAttack = false;
+        _canAttack = false;
+        yield return _wait;
+        _canAttack = true;
     }
 }

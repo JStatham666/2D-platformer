@@ -1,53 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    //private Health _health;
-    public int health;
+    private Health _health;
 
-    //private void Awake()
-    //{
-    //    _health = new Health();
-    //}
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
+    }
+
+    private void Awake()
+    {
+        _health = new Health();
+    }
 
     private void Update()
     {
-        //if (_health.CurrentHealth <= 0)
-        //{
-        //    Destroy(gameObject);
-        //}
-
-        if (health <= 0)
+        if (_health.CurrentHealth <= 0)
         {
             Destroy(gameObject);
         }
     }
 
-
-    //private void OnEnable()
-    //{
-    //    _health.Died += Die;
-    //}
-
-    //private void OnDisable()
-    //{
-    //    _health.Died -= Die;
-    //}
-
-    //public void TakeDamage(float damage)
-    //{
-    //    _health.TakeDamage(damage);
-    //}
-
-    public void TakeDamage(int damage)
+    private void OnEnable()
     {
-        health -= damage;
+        _health.Died += Die;
     }
 
-    //private void Die()
-    //{
-    //    Destroy(gameObject);
-    //}
+    private void OnDisable()
+    {
+        _health.Died -= Die;
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -1927,7 +1927,7 @@ MonoBehaviour:
   _userInput: {fileID: 1333264735}
   _attackImpulse: 200
   _LockAttack: 0
-  _attackPos: {fileID: 1530976178}
+  _attackPosition: {fileID: 1530976178}
   _enemy:
     serializedVersion: 2
     m_Bits: 128
@@ -2231,7 +2231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1530976178}
   m_Layer: 0
-  m_Name: AttackPos
+  m_Name: AttackPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2479,6 +2479,10 @@ PrefabInstance:
       propertyPath: _positions.Array.data[1].x
       value: -1.56
       objectReference: {fileID: 0}
+    - target: {fileID: 349307747738960662, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8266016804726558902, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.56
@@ -2497,15 +2501,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8266016804726558902, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266016804726558902, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266016804726558902, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8266016804726558902, guid: e3a591b90e934e548bf8b48c1706bfbe, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

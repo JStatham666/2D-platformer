@@ -5,6 +5,20 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _startPosition;
 
     private Health _health;
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
+    }
+
+    public bool TryAddHealth(float recoverHealth)
+    {
+        if (_health.TryAddHealth(recoverHealth))
+        {
+            return true;
+        }
+
+        return false;
+    }
 
     private void Awake()
     {
@@ -27,11 +41,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        //Debug.Log(_health.CurrentHealth);
-    }
-
     private void OnEnable()
     {
         _health.Died += Die;
@@ -40,16 +49,6 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         _health.Died -= Die;
-    }
-
-    public bool TryAddHealth(float recoverHealth)
-    {
-        if (_health.TryAddHealth(recoverHealth))
-        {
-            return true;
-        }
-
-        return false;
     }
 
     private void Die()
