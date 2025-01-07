@@ -1922,17 +1922,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21ee8b721bb55f040ae42fce45d0acf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _groundCollisionDetector: {fileID: 1333264734}
-  _playerAnimatorData: {fileID: 1333264736}
   _userInput: {fileID: 1333264735}
-  _attackImpulse: 200
-  _LockAttack: 0
+  _playerAnimatorData: {fileID: 1333264736}
+  _groundCollisionDetector: {fileID: 1333264734}
   _attackPosition: {fileID: 1530976178}
   _enemy:
     serializedVersion: 2
     m_Bits: 128
   _attackRange: 0.5
   _damage: 100
+  _attackColldown: 2
 --- !u!1 &1378972070
 GameObject:
   m_ObjectHideFlags: 0

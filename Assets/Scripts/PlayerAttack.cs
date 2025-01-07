@@ -9,6 +9,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private UserInput _userInput;
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
     [SerializeField] private GroundCollisionDetector _groundCollisionDetector;
+    //[SerializeField] private int _attackImpulse = 200;
     [SerializeField] private Transform _attackPosition;
     [SerializeField] private LayerMask _enemy;
     [SerializeField] private float _attackRange;
@@ -18,10 +19,13 @@ public class PlayerAttack : MonoBehaviour
     private WaitForSeconds _wait;
     private bool _canAttack = true;
 
+    //private Rigidbody2D _rigidbody2d;
+
     private void Awake()
     {
         _wait = new WaitForSeconds(_attackColldown);
         _userInput = GetComponent<UserInput>();
+        //_rigidbody2d = GetComponent<Rigidbody2D>();
         _playerAnimatorData = GetComponent<PlayerAnimatorData>();
         _groundCollisionDetector = GetComponent<GroundCollisionDetector>();
     }
@@ -36,6 +40,19 @@ public class PlayerAttack : MonoBehaviour
         if (_groundCollisionDetector.OnGround && Input.GetKeyDown(_userInput.AttackButton) && _canAttack)
         {           
             _playerAnimatorData.SetupAttack(_canAttack);
+
+            //_rigidbody2d.velocity = new Vector2(0, 0);
+
+            //Quaternion rotationLeftAngle = Quaternion.Euler(0f, -180f, 0f);
+
+            //if (_rigidbody2d.transform.rotation == rotationLeftAngle)
+            //{
+            //    _rigidbody2d.AddForce(Vector2.left * _attackImpulse);
+            //}
+            //else
+            //{
+            //    _rigidbody2d.AddForce(Vector2.right * _attackImpulse);
+            //}
 
             Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPosition.position, _attackRange, _enemy);
 

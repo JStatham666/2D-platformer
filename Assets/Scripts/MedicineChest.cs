@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MedicineChest : MonoBehaviour
+public class MedicineChest : MonoBehaviour, ICollectable
 {
     [SerializeField] private float _recoverHealth = 50f;
 

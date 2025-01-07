@@ -1,35 +1,38 @@
 using System;
-using UnityEngine;
 
 public class Health
 {
-    [SerializeField] private float _maxHealth = 100f;
-
-    [SerializeField] private float _currentHealth = 100f;
-
-    public float CurrentHealth => _currentHealth;
+    private float _maxValue = 100f;
+    private float _currentValue = 90f;
 
     public event Action Died;
 
+    public float CurrentValue => _currentValue;
+
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
+        _currentValue -= damage;
 
-        if (_currentHealth <= 0)
+        if (_currentValue <= 0)
         {
             Died?.Invoke();
         }
     }
 
-    public bool TryAddHealth(float recoverHealth)
+    public bool TryAddHealth(float recoverValue)
     {
-        if (_currentHealth + recoverHealth > _maxHealth)
-        {
+        if (_currentValue == _maxValue)
+        {            
             return false;
+        }
+        else if (_currentValue + recoverValue >= _maxValue)
+        {
+            _currentValue = _maxValue;
+            return true;
         }
         else
         {
-            _currentHealth += recoverHealth;
+            _currentValue += recoverValue;
             return true;
         }
     }

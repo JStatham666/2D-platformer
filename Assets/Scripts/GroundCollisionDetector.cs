@@ -1,21 +1,20 @@
-using System.Collections;
+using System;
 using UnityEngine;
+using System.Collections;
 
-[RequireComponent(typeof(PlayerAnimatorData))]
+
 public class GroundCollisionDetector : MonoBehaviour
-{
-    [SerializeField] private PlayerAnimatorData _playerAnimatorData;
+{   
     [SerializeField] private Transform _groundCheck;
     [SerializeField] private Transform _checkRadius;
     [SerializeField] private LayerMask _ground;
-    [SerializeField] private bool _isGrounded;
-
-    public bool OnGround => _isGrounded;
+    [SerializeField] private bool _isGrounded = false;
 
     private float _delay = 0.1f;
 
-    private void Awake() =>
-        _playerAnimatorData = GetComponent<PlayerAnimatorData>();
+    public event Action Grounded;
+
+    public bool OnGround => _isGrounded;
 
     private void Start() =>
         StartCoroutine(CollidedWithGroundDelay());
@@ -23,7 +22,7 @@ public class GroundCollisionDetector : MonoBehaviour
     private void CollidedWithGround()
     {
         _isGrounded = Physics2D.OverlapBox(_groundCheck.position, _checkRadius.localScale, 0, _ground);
-        _playerAnimatorData.SetupIsGrounded(_isGrounded);
+        Grounded?.Invoke();
     }
 
     private IEnumerator CollidedWithGroundDelay()

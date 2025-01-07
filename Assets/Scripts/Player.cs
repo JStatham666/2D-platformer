@@ -5,42 +5,11 @@ public class Player : MonoBehaviour
     [SerializeField] private Transform _startPosition;
 
     private Health _health;
-    public void TakeDamage(float damage)
-    {
-        _health.TakeDamage(damage);
-    }
-
-    public bool TryAddHealth(float recoverHealth)
-    {
-        if (_health.TryAddHealth(recoverHealth))
-        {
-            return true;
-        }
-
-        return false;
-    }
 
     private void Awake()
     {
         _health = new Health();
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Coin coin))
-            coin.Interact();
-
-        if (collision.gameObject.TryGetComponent(out MedicineChest medicineChest))
-        {
-            if (TryAddHealth(medicineChest.RecoverHealth) == false)
-            {
-                return;
-            }
-
-            medicineChest.Collect();
-        }
-    }
-
     private void OnEnable()
     {
         _health.Died += Die;
@@ -49,6 +18,30 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         _health.Died -= Die;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out ICollectable collectable))
+        {
+            if (collectable is MedicineChest medicineChest)
+            {
+                if (TryAddHealth(medicineChest.RecoverHealth) == false)                
+                    return;               
+            }
+
+            collectable.Collect();
+        }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health.TakeDamage(damage);
+    }
+
+    public bool TryAddHealth(float recoverHealth)
+    {
+        return _health.TryAddHealth(recoverHealth);
     }
 
     private void Die()
