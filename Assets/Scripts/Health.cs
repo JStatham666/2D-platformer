@@ -1,8 +1,10 @@
 using System;
+using UnityEngine;
 
 public class Health
 {
     private float _maxValue = 100f;
+    private float _minValue = 1f;
     private float _currentValue = 90f;
 
     public event Action Died;
@@ -19,21 +21,30 @@ public class Health
         }
     }
 
-    public bool TryAddHealth(float recoverValue)
+    public bool TryAddValue(float recoverValue)
     {
-        if (_currentValue == _maxValue)
-        {            
+        if (_currentValue == _maxValue) 
             return false;
-        }
-        else if (_currentValue + recoverValue >= _maxValue)
-        {
-            _currentValue = _maxValue;
-            return true;
-        }
-        else
-        {
-            _currentValue += recoverValue;
-            return true;
-        }
+
+        _currentValue = Mathf.Clamp(_currentValue + recoverValue, _minValue, _maxValue);
+        return true;
+
+        //if (_currentValue == _maxValue)
+        //{
+        //    return false;
+        //}
+        //else
+        //{
+        //    if (_currentValue + recoverValue >= _maxValue)
+        //    {
+        //        _currentValue = _maxValue;
+        //    }
+        //    else
+        //    {
+        //        _currentValue += recoverValue;
+        //    }
+
+        //    return true;
+        //}
     }
 }

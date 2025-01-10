@@ -1851,6 +1851,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startPosition: {fileID: 1870531591}
+  _collector: {fileID: 0}
 --- !u!114 &1333264734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1863,7 +1864,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c23f68020192a904c8a810c5f05fc34c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerAnimatorData: {fileID: 1333264736}
   _groundCheck: {fileID: 1564714229}
   _checkRadius: {fileID: 1564714229}
   _ground:
@@ -1908,6 +1908,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _groundCollisionDetector: {fileID: 1333264734}
+  _playerAnimatorData: {fileID: 1333264736}
   _userInput: {fileID: 1333264735}
   _jumpForce: 8
 --- !u!114 &1333264738

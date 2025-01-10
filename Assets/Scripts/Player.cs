@@ -3,8 +3,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     [SerializeField] private Transform _startPosition;
+    [SerializeField] private Collector  _collector;
 
     private Health _health;
+
+    public void Update()
+    {
+        Debug.Log(_health.CurrentValue);
+    }
 
     private void Awake()
     {
@@ -13,11 +19,15 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         _health.Died += Die;
+        //_collector.CoinCollected += Collect;
+        //_collector.MedicineChestCollected += Collect;
     }
 
     private void OnDisable()
     {
         _health.Died -= Die;
+    //  _collector.CoinCollected -= Collect;
+    //  _collector.MedicineChestCollected -= Collect;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -26,23 +36,29 @@ public class Player : MonoBehaviour
         {
             if (collectable is MedicineChest medicineChest)
             {
-                if (TryAddHealth(medicineChest.RecoverHealth) == false)                
-                    return;               
+                if (TryAddHealth(medicineChest.RecoverHealth) == false)
+                    return;
             }
 
             collectable.Collect();
         }
     }
 
+    public bool TryAddHealth(float recoverHealth)
+    {
+        return _health.TryAddValue(recoverHealth);
+    }
+
+    //private void Collect()
+    //{       
+    //    collectable.Collect();
+    //}
+
     public void TakeDamage(float damage)
     {
         _health.TakeDamage(damage);
     }
 
-    public bool TryAddHealth(float recoverHealth)
-    {
-        return _health.TryAddHealth(recoverHealth);
-    }
 
     private void Die()
     {

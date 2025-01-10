@@ -4,6 +4,11 @@ public class Enemy : MonoBehaviour
 {
     private Health _health;
 
+    private void Awake()
+    {
+        _health = new Health();
+    }
+
     private void OnEnable()
     {
         _health.Died += Die;
@@ -17,11 +22,6 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _health.TakeDamage(damage);
-    }
-
-    private void Awake()
-    {
-        _health = new Health();
     }
 
     private void Die()

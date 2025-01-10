@@ -4,12 +4,6 @@ using UnityEngine;
 public class PlayerAnimatorData : MonoBehaviour
 {
     [SerializeField] private Animator _animator;
-    public static class Params
-    {
-        public static readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
-        public static readonly int PositionX = Animator.StringToHash(nameof(PositionX));
-        public static readonly int Attack = Animator.StringToHash(nameof(Attack));
-    }
 
     private void Awake() =>
         _animator = GetComponent<Animator>();
@@ -30,5 +24,12 @@ public class PlayerAnimatorData : MonoBehaviour
     {
         if (shouldAttack)
             _animator.SetTrigger(PlayerAnimatorData.Params.Attack);
+    }
+
+    public static class Params
+    {
+        public static readonly int IsGrounded = Animator.StringToHash(nameof(IsGrounded));
+        public static readonly int PositionX = Animator.StringToHash(nameof(PositionX));
+        public static readonly int Attack = Animator.StringToHash(nameof(Attack));
     }
 }
