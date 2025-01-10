@@ -1,12 +1,10 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Collector : MonoBehaviour
 {
-    public event Action CoinCollected;
-    public event Action MedicineChestCollected;
+    public event Action<Coin> CoinCollected;
+    public event Action<MedicineChest> MedicineChestCollected;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -14,17 +12,13 @@ public class Collector : MonoBehaviour
         {
             if (collectable is Coin coin)
             {
-                CoinCollected?.Invoke();
+                CoinCollected?.Invoke(coin);
             }
 
             if (collectable is MedicineChest medicineChest)
             {
-                MedicineChestCollected?.Invoke();
-                //if (TryAddHealth(medicineChest.RecoverHealth) == false)
-                //    return;
+                MedicineChestCollected?.Invoke(medicineChest);
             }
-
-            //collectable.Collect();
         }
     }
 }

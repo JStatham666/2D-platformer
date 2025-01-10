@@ -16,32 +16,32 @@ public class Player : MonoBehaviour
     {
         _health = new Health();
     }
+
     private void OnEnable()
     {
         _health.Died += Die;
-        //_collector.CoinCollected += Collect;
-        //_collector.MedicineChestCollected += Collect;
+        _collector.CoinCollected += CollectCoin;
+        _collector.MedicineChestCollected += CollectMed;
     }
 
     private void OnDisable()
     {
         _health.Died -= Die;
-    //  _collector.CoinCollected -= Collect;
-    //  _collector.MedicineChestCollected -= Collect;
+        _collector.CoinCollected -= CollectCoin;
+        _collector.MedicineChestCollected -= CollectMed;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void CollectCoin(Coin coin)
     {
-        if (collision.TryGetComponent(out ICollectable collectable))
-        {
-            if (collectable is MedicineChest medicineChest)
-            {
-                if (TryAddHealth(medicineChest.RecoverHealth) == false)
-                    return;
-            }
+        coin.Collect();
+    }
 
-            collectable.Collect();
-        }
+    private void CollectMed(MedicineChest medicineChest)
+    {
+        if (TryAddHealth(medicineChest.RecoverHealth) == false)
+            return;
+
+        medicineChest.Collect();
     }
 
     public bool TryAddHealth(float recoverHealth)
@@ -49,16 +49,10 @@ public class Player : MonoBehaviour
         return _health.TryAddValue(recoverHealth);
     }
 
-    //private void Collect()
-    //{       
-    //    collectable.Collect();
-    //}
-
     public void TakeDamage(float damage)
     {
         _health.TakeDamage(damage);
     }
-
 
     private void Die()
     {

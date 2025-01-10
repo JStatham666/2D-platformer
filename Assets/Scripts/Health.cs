@@ -28,23 +28,5 @@ public class Health
 
         _currentValue = Mathf.Clamp(_currentValue + recoverValue, _minValue, _maxValue);
         return true;
-
-        //if (_currentValue == _maxValue)
-        //{
-        //    return false;
-        //}
-        //else
-        //{
-        //    if (_currentValue + recoverValue >= _maxValue)
-        //    {
-        //        _currentValue = _maxValue;
-        //    }
-        //    else
-        //    {
-        //        _currentValue += recoverValue;
-        //    }
-
-        //    return true;
-        //}
     }
 }

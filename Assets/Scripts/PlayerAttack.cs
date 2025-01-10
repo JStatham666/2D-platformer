@@ -31,6 +31,12 @@ public class PlayerAttack : MonoBehaviour
         Attack();
     }
 
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_attackPosition.position, _attackRange);
+    }
+
     private void Attack()
     {
         if (_groundCollisionDetector.OnGround && Input.GetKeyDown(_userInput.AttackButton) && _canAttack)
@@ -51,11 +57,6 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_attackPosition.position, _attackRange);
-    }
 
     private IEnumerator AttackColldown()
     {

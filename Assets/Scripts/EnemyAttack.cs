@@ -3,12 +3,11 @@ using System.Collections;
 
 public class EnemyAttack : MonoBehaviour
 {
-    [SerializeField] private int _damage = 10;
-    [SerializeField] private float _attackColldown = 2f;
+    [SerializeField] private int _damage = 40;
+    [SerializeField] private float _attackColldown = 1f;
 
     private WaitForSeconds _wait;
-    private bool _canAttack = true;
-    private bool _mustAttack = false;
+    private Coroutine _attackCoroutine;
 
     private void Awake()
     {
@@ -17,22 +16,24 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Player player) && _canAttack)
+        if (collision.TryGetComponent(out Player player))
         {
-            _mustAttack = true;
-            StartCoroutine(AttackWithColldown(player));
-            //coroutine = StartCoroutine(AttackWithColldown(player));         
+            if (_attackCoroutine == null)
+            {
+                _attackCoroutine = StartCoroutine(AttackWithCooldown(player));
+            }
         }
     }
-
-    //Coroutine coroutine;
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Player player))
         {
-            //StopCoroutine(coroutine);
-            _mustAttack = false;
+            if (_attackCoroutine != null)
+            {
+                StopCoroutine(_attackCoroutine);
+                _attackCoroutine = null;
+            }
         }
     }
 
@@ -41,15 +42,13 @@ public class EnemyAttack : MonoBehaviour
         player.TakeDamage(_damage);
     }
 
-    private IEnumerator AttackWithColldown(Player player)
+    private IEnumerator AttackWithCooldown(Player player)
     {
-        while (_mustAttack)
+        while (enabled)
         {
             Attack(player);
 
-            _canAttack = false;
             yield return _wait;
-            _canAttack = true;
         }
     }
 }
