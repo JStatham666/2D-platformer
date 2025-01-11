@@ -17,6 +17,7 @@ public class PlayerAttack : MonoBehaviour
 
     private WaitForSeconds _wait;
     private bool _canAttack = true;
+    private bool _isGrounded;
 
     private void Awake()
     {
@@ -37,19 +38,24 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.DrawWireSphere(_attackPosition.position, _attackRange);
     }
 
-    //private void OnEnable()
-    //{
-    //    _groundCollisionDetector.Grounded += TryAttack;
-    //}
+    private void OnEnable()
+    {
+        _groundCollisionDetector.Grounded += ChangeState;
+    }
 
-    //private void OnDisable()
-    //{
-    //    _groundCollisionDetector.Grounded -= TryAttack;
-    //}
+    private void OnDisable()
+    {
+        _groundCollisionDetector.Grounded -= ChangeState;
+    }
+
+    private void ChangeState(bool isGrounded)
+    {
+        _isGrounded = isGrounded;
+    }
 
     private void TryAttack()
     {
-        if (_groundCollisionDetector.OnGround && _userInput.IsAttack && _canAttack)
+        if (_isGrounded && _userInput.IsAttack && _canAttack)
         {
             _playerAnimatorData.SetupAttack(_canAttack);
 
@@ -66,7 +72,6 @@ public class PlayerAttack : MonoBehaviour
             StartCoroutine(AttackColldown());
         }
     }
-
 
     private IEnumerator AttackColldown()
     {

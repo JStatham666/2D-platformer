@@ -12,6 +12,7 @@ public class PlayerJumper : MonoBehaviour
 
     private Rigidbody2D _rigidbody2d;
     private bool _isJump;
+    private bool _isGrounded;
 
     private void Awake()
     {
@@ -21,10 +22,8 @@ public class PlayerJumper : MonoBehaviour
 
     private void Update()
     {
-        if (_userInput.IsJump && _groundCollisionDetector.OnGround)
+        if (_userInput.IsJump && _isGrounded)
             _isJump = true;
-
-        ChangeState();
     }
 
     private void FixedUpdate()
@@ -42,14 +41,11 @@ public class PlayerJumper : MonoBehaviour
         _groundCollisionDetector.Grounded -= ChangeState;
     }
 
-    //private void ChangeState(bool grounded)
-    //{
-    //    _playerAnimatorData.SetupIsGrounded(grounded);
-    //}
-
-    private void ChangeState()
+    private void ChangeState(bool isGrounded)
     {
-        _playerAnimatorData.SetupIsGrounded(_groundCollisionDetector.OnGround);
+        _isGrounded = isGrounded;
+
+        _playerAnimatorData.SetupIsGrounded(isGrounded);
     }
 
     private void Jump()
