@@ -28,7 +28,7 @@ public class PlayerAttack : MonoBehaviour
 
     private void Update()
     {
-        Attack();
+        TryAttack();
     }
 
     private void OnDrawGizmosSelected()
@@ -37,9 +37,19 @@ public class PlayerAttack : MonoBehaviour
         Gizmos.DrawWireSphere(_attackPosition.position, _attackRange);
     }
 
-    private void Attack()
+    //private void OnEnable()
+    //{
+    //    _groundCollisionDetector.Grounded += TryAttack;
+    //}
+
+    //private void OnDisable()
+    //{
+    //    _groundCollisionDetector.Grounded -= TryAttack;
+    //}
+
+    private void TryAttack()
     {
-        if (_groundCollisionDetector.OnGround && Input.GetKeyDown(_userInput.AttackButton) && _canAttack)
+        if (_groundCollisionDetector.OnGround && _userInput.IsAttack && _canAttack)
         {
             _playerAnimatorData.SetupAttack(_canAttack);
 
@@ -47,9 +57,9 @@ public class PlayerAttack : MonoBehaviour
 
             for (int i = 0; i < enemies.Length; i++)
             {
-                if (enemies[i].TryGetComponent(out Enemy enemy))
+                if (enemies[i].TryGetComponent(out IDamageable damageable))
                 {
-                    enemy.TakeDamage(_damage);
+                    damageable.TakeDamage(_damage);
                 }
             }
 

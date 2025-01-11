@@ -16,18 +16,18 @@ public class EnemyAttack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Player player))
+        if (collision.TryGetComponent(out IDamageable damageable))
         {
             if (_attackCoroutine == null)
             {
-                _attackCoroutine = StartCoroutine(AttackWithCooldown(player));
+                _attackCoroutine = StartCoroutine(AttackWithCooldown(damageable));
             }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Player player))
+        if (collision.TryGetComponent(out IDamageable damageable))
         {
             if (_attackCoroutine != null)
             {
@@ -37,16 +37,16 @@ public class EnemyAttack : MonoBehaviour
         }
     }
 
-    private void Attack(Player player)
+    private void Attack(IDamageable damageable)
     {
-        player.TakeDamage(_damage);
+        damageable.TakeDamage(_damage);
     }
 
-    private IEnumerator AttackWithCooldown(Player player)
+    private IEnumerator AttackWithCooldown(IDamageable damageable)
     {
         while (enabled)
         {
-            Attack(player);
+            Attack(damageable);
 
             yield return _wait;
         }

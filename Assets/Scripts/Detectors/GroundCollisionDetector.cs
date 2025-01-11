@@ -9,9 +9,11 @@ public class GroundCollisionDetector : MonoBehaviour
     [SerializeField] private Transform _checkRadius;
     [SerializeField] private LayerMask _ground;
     [SerializeField] private bool _isGrounded = false;
+    //[SerializeField] private bool _isGrounded;
 
     private float _delay = 0.1f;
 
+    //public event Action<bool> Grounded;
     public event Action Grounded;
 
     public bool OnGround => _isGrounded;
@@ -22,6 +24,7 @@ public class GroundCollisionDetector : MonoBehaviour
     private void CollidedWithGround()
     {
         _isGrounded = Physics2D.OverlapBox(_groundCheck.position, _checkRadius.localScale, 0, _ground);
+        //Grounded?.Invoke(_isGrounded);
         Grounded?.Invoke();
     }
 

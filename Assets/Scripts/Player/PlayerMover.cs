@@ -7,6 +7,8 @@ public class PlayerMover : MonoBehaviour
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
     [SerializeField] private UserInput _userInput;
     [SerializeField] private float _speed;
+
+    private float _direction = 0f;
    
     private void Awake()
     {
@@ -16,15 +18,20 @@ public class PlayerMover : MonoBehaviour
 
     private void Update()
     {
-        Walk();           
+        _direction = _userInput.Move;          
+    }
+
+    private void FixedUpdate() 
+    {
+        Walk();
     }
 
     private void Walk()
     {
-        _playerAnimatorData.SetupPositionX(Mathf.Abs(_userInput.GetVectorX()));
+        _playerAnimatorData.SetupPositionX(Mathf.Abs(_direction));
 
         Vector3 position = transform.position;
-        position.x += _userInput.GetVectorX() * _speed * Time.deltaTime;
+        position.x += _direction * _speed * Time.fixedDeltaTime;
         transform.position = position;
 
         Flip();
@@ -35,11 +42,11 @@ public class PlayerMover : MonoBehaviour
         Quaternion rotationRightAngle = Quaternion.Euler(0f, 0f, 0f);
         Quaternion rotationLeftAngle = Quaternion.Euler(0f, 180f, 0f);
 
-        if (_userInput.GetVectorX() > 0)
+        if (_direction > 0)
         {
             transform.rotation = rotationRightAngle;
         }
-        else if (_userInput.GetVectorX() < 0)
+        else if (_direction < 0)
         {
             transform.rotation = rotationLeftAngle;
         }

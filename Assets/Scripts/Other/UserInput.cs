@@ -1,13 +1,24 @@
+using System;
 using UnityEngine;
 
 public class UserInput : MonoBehaviour
 {
-    public readonly KeyCode SpaceButton = KeyCode.Space;
-    public readonly KeyCode AttackButton = KeyCode.E;
-   
-    public float GetVectorX()
+    private const string Horizontal = "Horizontal";
+
+    public float Move { get; private set; }
+    public bool IsJump { get; private set; }
+    public bool IsAttack { get; private set; }
+
+    private void Update()
     {
-        Vector2 moveVector;
-        return moveVector.x = Input.GetAxis("Horizontal");
+        Move = Input.GetAxisRaw(Horizontal);
+        IsJump = Input.GetKeyDown(KeyCode.Space);
+        IsAttack = Input.GetKeyDown(KeyCode.E);
     }
+
+    //public float GetVectorX()
+    //{
+    //    Vector2 moveVector;
+    //    return moveVector.x = Input.GetAxis("Horizontal");
+    //}
 }

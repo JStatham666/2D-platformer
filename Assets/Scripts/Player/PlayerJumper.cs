@@ -11,6 +11,7 @@ public class PlayerJumper : MonoBehaviour
     [SerializeField] private float _jumpForce;
 
     private Rigidbody2D _rigidbody2d;
+    private bool _isJump;
 
     private void Awake()
     {
@@ -20,8 +21,15 @@ public class PlayerJumper : MonoBehaviour
 
     private void Update()
     {
-        Jump();
+        if (_userInput.IsJump && _groundCollisionDetector.OnGround)
+            _isJump = true;
+
         ChangeState();
+    }
+
+    private void FixedUpdate()
+    {
+        Jump();
     }
 
     private void OnEnable()
@@ -34,6 +42,11 @@ public class PlayerJumper : MonoBehaviour
         _groundCollisionDetector.Grounded -= ChangeState;
     }
 
+    //private void ChangeState(bool grounded)
+    //{
+    //    _playerAnimatorData.SetupIsGrounded(grounded);
+    //}
+
     private void ChangeState()
     {
         _playerAnimatorData.SetupIsGrounded(_groundCollisionDetector.OnGround);
@@ -41,7 +54,10 @@ public class PlayerJumper : MonoBehaviour
 
     private void Jump()
     {
-        if (Input.GetKeyDown(_userInput.SpaceButton) && _groundCollisionDetector.OnGround)
+        if (_isJump)
+        {
             _rigidbody2d.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
+            _isJump = false;
+        }
     }
 }
