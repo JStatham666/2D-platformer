@@ -38,19 +38,20 @@ public class EnemyPatroler : MonoBehaviour
 
         transform.position = new Vector3(
             Mathf.MoveTowards(transform.position.x, _target.position.x, _speed * Time.deltaTime),
-            transform.position.y, transform.position.z);
-            
+            transform.position.y, transform.position.z);         
 
         if (transform.position.x == _positions[_currentTarget].position.x)
         {
-            if (_currentTarget < _positions.Count - 1)
-            {
-                _currentTarget++;
-            }
-            else
-            {
-                _currentTarget = 0;
-            }
+            _currentTarget = ++_currentTarget % _positions.Count;
+
+            //if (_currentTarget < _positions.Count - 1)
+            //{
+            //    _currentTarget++;
+            //}
+            //else
+            //{
+            //    _currentTarget = 0;
+            //}
 
             _target = _positions[_currentTarget];
         }

@@ -14,8 +14,7 @@ public class Collector : MonoBehaviour
             {
                 CoinCollected?.Invoke(coin);
             }
-
-            if (collectable is MedicineChest medicineChest)
+            else if (collectable is MedicineChest medicineChest)
             {
                 MedicineChestCollected?.Invoke(medicineChest);
             }

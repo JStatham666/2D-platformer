@@ -8,12 +8,6 @@ public class PlayerAnimatorData : MonoBehaviour
     private void Awake() =>
         _animator = GetComponent<Animator>();
 
-    private void LogParameters()
-    {
-        bool isGrounded = _animator.GetBool(PlayerAnimatorData.Params.IsGrounded);
-        float positionX = _animator.GetFloat(PlayerAnimatorData.Params.PositionX);
-    }
-
     public void SetupIsGrounded(bool isGrounded) =>
         _animator.SetBool(PlayerAnimatorData.Params.IsGrounded, isGrounded);
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class UserInput : MonoBehaviour
@@ -15,10 +14,4 @@ public class UserInput : MonoBehaviour
         IsJump = Input.GetKeyDown(KeyCode.Space);
         IsAttack = Input.GetKeyDown(KeyCode.E);
     }
-
-    //public float GetVectorX()
-    //{
-    //    Vector2 moveVector;
-    //    return moveVector.x = Input.GetAxis("Horizontal");
-    //}
 }
