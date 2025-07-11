@@ -7,6 +7,7 @@ public class EnemyPatroler : MonoBehaviour
     [SerializeField] private PlayerFinder _playerFinder;
     [SerializeField] private List<Transform> _positions;
     [SerializeField] private float _speed;
+    [SerializeField] private Transform _skin;
 
     private Transform _target;
 
@@ -44,15 +45,6 @@ public class EnemyPatroler : MonoBehaviour
         {
             _currentTarget = ++_currentTarget % _positions.Count;
 
-            //if (_currentTarget < _positions.Count - 1)
-            //{
-            //    _currentTarget++;
-            //}
-            //else
-            //{
-            //    _currentTarget = 0;
-            //}
-
             _target = _positions[_currentTarget];
         }
     }
@@ -62,13 +54,13 @@ public class EnemyPatroler : MonoBehaviour
         Quaternion rotationRightAngle = Quaternion.Euler(0f, 0f, 0f);
         Quaternion rotationLeftAngle = Quaternion.Euler(0f, 180f, 0f);
 
-        if (_target.position.x > transform.position.x)
+        if (_target.position.x > _skin.position.x)
         {
-            transform.rotation = rotationRightAngle;
+            _skin.rotation = rotationRightAngle;
         }
-        else if (_target.position.x < transform.position.x)
+        else if (_target.position.x < _skin.position.x)
         {
-            transform.rotation = rotationLeftAngle;
+            _skin.rotation = rotationLeftAngle;
         }
     }
 

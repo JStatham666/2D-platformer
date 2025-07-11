@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerAnimatorData))]
+//[RequireComponent(typeof(PlayerAnimatorData))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(UserInput))]
 public class PlayerJumper : MonoBehaviour

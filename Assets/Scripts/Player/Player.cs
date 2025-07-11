@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public class Player : MonoBehaviour, IDamageable
 {
     [SerializeField] private Transform _startPosition;
@@ -7,14 +9,9 @@ public class Player : MonoBehaviour, IDamageable
 
     private Health _health;
 
-    public void Update()
-    {
-        Debug.Log(_health.CurrentValue);
-    }
-
     private void Awake()
     {
-        _health = new Health();
+        _health = GetComponent<Health>();
     }
 
     private void OnEnable()
@@ -58,7 +55,7 @@ public class Player : MonoBehaviour, IDamageable
     {
         _health.Died -= Die;
         transform.position = _startPosition.position;
-        _health = new Health();
+        _health.Reborn();
         _health.Died += Die;
     }
 }

@@ -1,12 +1,13 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Health))]
 public class Enemy : MonoBehaviour, IDamageable
 {
     private Health _health;
 
     private void Awake()
     {
-        _health = new Health();
+        _health = GetComponent<Health>();
     }
 
     private void OnEnable()

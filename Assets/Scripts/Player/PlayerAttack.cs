@@ -2,8 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(UserInput))]
-[RequireComponent(typeof(PlayerAnimatorData))]
-[RequireComponent(typeof(GroundCollisionDetector))]
+//[RequireComponent(typeof(PlayerAnimatorData))]
+//[RequireComponent(typeof(GroundCollisionDetector))]
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private UserInput _userInput;
@@ -12,7 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private Transform _attackPosition;
     [SerializeField] private LayerMask _enemy;
     [SerializeField] private float _attackRange;
-    [SerializeField] private int _damage = 100;
+    [SerializeField] private int _damage = 50;
     [SerializeField] private float _attackColldown = 2f;
 
     private WaitForSeconds _wait;
@@ -23,8 +23,7 @@ public class PlayerAttack : MonoBehaviour
     {
         _wait = new WaitForSeconds(_attackColldown);
         _userInput = GetComponent<UserInput>();
-        _playerAnimatorData = GetComponent<PlayerAnimatorData>();
-        _groundCollisionDetector = GetComponent<GroundCollisionDetector>();
+        //_playerAnimatorData = GetComponent<PlayerAnimatorData>();
     }
 
     private void Update()
@@ -66,6 +65,7 @@ public class PlayerAttack : MonoBehaviour
                 if (enemies[i].TryGetComponent(out IDamageable damageable))
                 {
                     damageable.TakeDamage(_damage);
+                    Debug.Log("враг получил " + _damage + " урона");
                 }
             }
 

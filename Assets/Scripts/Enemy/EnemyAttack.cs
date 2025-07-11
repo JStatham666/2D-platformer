@@ -18,9 +18,12 @@ public class EnemyAttack : MonoBehaviour
     {
         if (collision.TryGetComponent(out IDamageable damageable))
         {
-            if (_attackCoroutine == null)
+            if (collision.TryGetComponent(out Player player))
             {
-                _attackCoroutine = StartCoroutine(AttackWithCooldown(damageable));
+                if (_attackCoroutine == null)
+                {
+                    _attackCoroutine = StartCoroutine(AttackWithCooldown(player));
+                }
             }
         }
     }
@@ -29,10 +32,13 @@ public class EnemyAttack : MonoBehaviour
     {
         if (collision.TryGetComponent(out IDamageable damageable))
         {
-            if (_attackCoroutine != null)
+            if (collision.TryGetComponent(out Player player))
             {
-                StopCoroutine(_attackCoroutine);
-                _attackCoroutine = null;
+                if (_attackCoroutine != null)
+                {
+                    StopCoroutine(_attackCoroutine);
+                    _attackCoroutine = null;
+                }
             }
         }
     }

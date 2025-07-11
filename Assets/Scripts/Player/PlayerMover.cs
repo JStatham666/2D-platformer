@@ -1,19 +1,20 @@
 using UnityEngine;
 
 [RequireComponent(typeof(UserInput))]
-[RequireComponent(typeof(PlayerAnimatorData))]
+//[RequireComponent(typeof(PlayerAnimatorData))]
 public class PlayerMover : MonoBehaviour
 {  
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
     [SerializeField] private UserInput _userInput;
     [SerializeField] private float _speed;
+    [SerializeField] private Transform _skin;
 
     private float _direction = 0f;
    
     private void Awake()
     {
         _userInput = GetComponent<UserInput>();
-        _playerAnimatorData = GetComponent<PlayerAnimatorData>();
+        //_playerAnimatorData = GetComponent<PlayerAnimatorData>();
     }
 
     private void Update()
@@ -44,11 +45,11 @@ public class PlayerMover : MonoBehaviour
 
         if (_direction > 0)
         {
-            transform.rotation = rotationRightAngle;
+            _skin.rotation = rotationRightAngle;
         }
         else if (_direction < 0)
         {
-            transform.rotation = rotationLeftAngle;
+            _skin.rotation = rotationLeftAngle;
         }
     }
 }
