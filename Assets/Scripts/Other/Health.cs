@@ -17,12 +17,12 @@ public class Health : MonoBehaviour
     {
         _currentValue -= damage;
 
-        ValueChanged?.Invoke();
-
         if (_currentValue <= 0)
         {
             Died?.Invoke();
         }
+
+        ValueChanged?.Invoke();
     }
 
     public bool TryAddValue(float recoverValue)

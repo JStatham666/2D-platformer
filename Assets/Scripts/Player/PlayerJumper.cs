@@ -46,6 +46,7 @@ public class PlayerJumper : MonoBehaviour
         _isGrounded = isGrounded;
 
         _playerAnimatorData.SetupIsGrounded(isGrounded);
+        _playerAnimatorData.SetupAttack(false);
     }
 
     private void Jump()

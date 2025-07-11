@@ -59,7 +59,7 @@ public class PlayerAttack : MonoBehaviour
             _playerAnimatorData.SetupAttack(_canAttack);
 
             Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPosition.position, _attackRange, _enemy);
-
+            Debug.Log("врагов найдено - " + enemies.Length);
             for (int i = 0; i < enemies.Length; i++)
             {
                 if (enemies[i].TryGetComponent(out IDamageable damageable))
