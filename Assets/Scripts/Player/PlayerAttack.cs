@@ -62,11 +62,11 @@ public class PlayerAttack : MonoBehaviour
                 }
             }
 
-            StartCoroutine(AttackColldown());
+            StartCoroutine(Colldown());
         }
     }
 
-    private IEnumerator AttackColldown()
+    private IEnumerator Colldown()
     {
         _canAttack = false;
         yield return _wait;
