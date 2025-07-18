@@ -20,6 +20,8 @@ public class Vampirism : MonoBehaviour
     private bool _isReady = true;
 
     public event Action<float, float> DurationTimerChanged;
+    public event Action CastStarted;
+    public event Action CastEnded;
 
     private void Awake()
     {
@@ -50,6 +52,7 @@ public class Vampirism : MonoBehaviour
 
     private IEnumerator ExecuteCast()
     {
+        CastStarted?.Invoke();
         _isReady = false;
 
         Coroutine damageCoroutine = StartCoroutine(ExecuteDamage());
@@ -71,6 +74,8 @@ public class Vampirism : MonoBehaviour
 
     private IEnumerator ExecuteCooldown()
     {
+        CastEnded?.Invoke();
+
         WaitForEndOfFrame tick = new WaitForEndOfFrame();
         float timer = 0;
 
@@ -81,7 +86,7 @@ public class Vampirism : MonoBehaviour
             timer = Mathf.Clamp(timer + Time.deltaTime, 0, _cooldownTime);
             DurationTimerChanged?.Invoke(timer, _cooldownTime);
         }
-
+       
         _isReady = true;
     }
 
@@ -100,7 +105,7 @@ public class Vampirism : MonoBehaviour
 
             Enemy nearestEnemy = FindNearestEnemy(colliders.Take(count).ToArray());
 
-            if (nearestEnemy != null)
+            if (nearestEnemy != null && _health.CurrentValue != _health.MaxValue)
             {
                 _health.TryAddValue(_damage);
                 nearestEnemy.TakeDamage(_damage);
@@ -117,9 +122,9 @@ public class Vampirism : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
-            if (collider.TryGetComponent(out Enemy enemy) && (enemy.transform.position - transform.position).magnitude < minDistance)
+            if (collider.TryGetComponent(out Enemy enemy) && (enemy.transform.position - transform.position).sqrMagnitude < minDistance)
             {
-                minDistance = (enemy.transform.position - transform.position).magnitude;
+                minDistance = Mathf.Sqrt((enemy.transform.position - transform.position).sqrMagnitude);
                 nearestEnemy = enemy;
             }
         }
