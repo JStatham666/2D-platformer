@@ -1,17 +1,15 @@
 using UnityEngine;
 
-//[RequireComponent(typeof(PlayerAnimatorData))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(UserInput))]
 public class PlayerJumper : MonoBehaviour
 {
     [SerializeField] private GroundCollisionDetector _groundCollisionDetector;
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
-    [SerializeField] private UserInput _userInput;
     [SerializeField] private float _jumpForce;
 
+    private UserInput _userInput;
     private Rigidbody2D _rigidbody2d;
-    private bool _isJump;
     private bool _isGrounded;
 
     private void Awake()
@@ -20,24 +18,15 @@ public class PlayerJumper : MonoBehaviour
         _userInput = GetComponent<UserInput>();
     }
 
-    private void Update()
-    {
-        if (_userInput.IsJump && _isGrounded)
-            _isJump = true;
-    }
-
-    private void FixedUpdate()
-    {
-        Jump();
-    }
-
     private void OnEnable()
     {
+        _userInput.JumpKeyPressed += Jump;
         _groundCollisionDetector.Grounded += ChangeState;
     }
 
     private void OnDisable()
     {
+        _userInput.JumpKeyPressed -= Jump;
         _groundCollisionDetector.Grounded -= ChangeState;
     }
 
@@ -51,10 +40,9 @@ public class PlayerJumper : MonoBehaviour
 
     private void Jump()
     {
-        if (_isJump)
+        if (_isGrounded)
         {
             _rigidbody2d.AddForce(transform.up * _jumpForce, ForceMode2D.Impulse);
-            _isJump = false;
         }
     }
 }

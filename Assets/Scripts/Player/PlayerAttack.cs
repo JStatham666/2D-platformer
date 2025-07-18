@@ -2,11 +2,8 @@ using UnityEngine;
 using System.Collections;
 
 [RequireComponent(typeof(UserInput))]
-//[RequireComponent(typeof(PlayerAnimatorData))]
-//[RequireComponent(typeof(GroundCollisionDetector))]
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private UserInput _userInput;
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
     [SerializeField] private GroundCollisionDetector _groundCollisionDetector;
     [SerializeField] private Transform _attackPosition;
@@ -15,6 +12,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private int _damage = 50;
     [SerializeField] private float _attackColldown = 2f;
 
+    private UserInput _userInput;
     private WaitForSeconds _wait;
     private bool _canAttack = true;
     private bool _isGrounded;
@@ -23,12 +21,6 @@ public class PlayerAttack : MonoBehaviour
     {
         _wait = new WaitForSeconds(_attackColldown);
         _userInput = GetComponent<UserInput>();
-        //_playerAnimatorData = GetComponent<PlayerAnimatorData>();
-    }
-
-    private void Update()
-    {
-        TryAttack();
     }
 
     private void OnDrawGizmosSelected()
@@ -39,11 +31,13 @@ public class PlayerAttack : MonoBehaviour
 
     private void OnEnable()
     {
+        _userInput.AttackKeyPressed += TryAttack;
         _groundCollisionDetector.Grounded += ChangeState;
     }
 
     private void OnDisable()
     {
+        _userInput.AttackKeyPressed -= TryAttack;
         _groundCollisionDetector.Grounded -= ChangeState;
     }
 
@@ -54,18 +48,17 @@ public class PlayerAttack : MonoBehaviour
 
     private void TryAttack()
     {
-        if (_isGrounded && _userInput.IsAttack && _canAttack)
+        if (_isGrounded && _canAttack)
         {
             _playerAnimatorData.SetupAttack(_canAttack);
 
             Collider2D[] enemies = Physics2D.OverlapCircleAll(_attackPosition.position, _attackRange, _enemy);
-            Debug.Log("врагов найдено - " + enemies.Length);
+
             for (int i = 0; i < enemies.Length; i++)
             {
                 if (enemies[i].TryGetComponent(out IDamageable damageable))
                 {
                     damageable.TakeDamage(_damage);
-                    Debug.Log("враг получил " + _damage + " урона");
                 }
             }
 

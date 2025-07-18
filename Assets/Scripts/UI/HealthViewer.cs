@@ -4,11 +4,6 @@ public abstract class HealthViewer : MonoBehaviour
 {
     [SerializeField] protected Health Health;
 
-    //private void Start()
-    //{
-    //    Health = gameObject.GetComponentInParent<Health>();
-    //}
-
     private void OnEnable()
     {
         Health.ValueChanged += OnHealthChanged;
@@ -19,11 +14,6 @@ public abstract class HealthViewer : MonoBehaviour
     {
         Health.ValueChanged -= OnHealthChanged;
     }
-
-    //public void Init(Health health)
-    //{
-    //    Health = health;
-    //}
 
     protected abstract void OnHealthChanged();
 }

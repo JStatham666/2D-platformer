@@ -25,12 +25,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6492014214344728133}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8266016804726558902}
+  m_Father: {fileID: 981405712396612060}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &7458853172924182066
 BoxCollider2D:
@@ -196,7 +196,6 @@ GameObject:
   - component: {fileID: -7094042222257274760}
   - component: {fileID: -934304800995699015}
   - component: {fileID: 5772807810700872770}
-  - component: {fileID: 6149785861174447772}
   m_Layer: 7
   m_Name: enemy
   m_TagString: Untagged
@@ -217,7 +216,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2064674599754730521}
   - {fileID: 2685882624551765699}
   - {fileID: 981405712396612060}
   m_Father: {fileID: 0}
@@ -435,21 +433,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &6149785861174447772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299511036951718540}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6aa68cb77577fe14e92bd332735a55b2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maxValue: 100
-  _minValue: 1
-  _currentValue: 100
 --- !u!1 &8541621074962858011
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,7 +462,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2064674599754730521}
   m_Father: {fileID: 8266016804726558902}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1953598402388513147

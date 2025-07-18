@@ -1,20 +1,18 @@
 using UnityEngine;
 
 [RequireComponent(typeof(UserInput))]
-//[RequireComponent(typeof(PlayerAnimatorData))]
 public class PlayerMover : MonoBehaviour
 {  
     [SerializeField] private PlayerAnimatorData _playerAnimatorData;
-    [SerializeField] private UserInput _userInput;
     [SerializeField] private float _speed;
     [SerializeField] private Transform _skin;
 
+    private UserInput _userInput;
     private float _direction = 0f;
    
     private void Awake()
     {
         _userInput = GetComponent<UserInput>();
-        //_playerAnimatorData = GetComponent<PlayerAnimatorData>();
     }
 
     private void Update()
